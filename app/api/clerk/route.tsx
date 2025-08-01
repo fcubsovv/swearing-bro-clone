@@ -12,7 +12,7 @@ interface WebhookData {
   image_url: string;
 }
 
-export async function POST({ req }: NextRequest) {
+export async function POST(req: NextRequest) {
   const wh = new Webhook(process.env.SINGING_SECRET);
   const headerPayload = await headers();
   const svixHeaders = {
