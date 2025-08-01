@@ -1,26 +1,22 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  --color-primary: #722f37; /* Burgundy (existing) */
+  --color-light: #f8f4e9; /* Warm beige (existing) */
+  --color-light-sidebar: #f0e6d6; /* Slightly darker beige (existing) */
+  --color-dark: #2a2a2a; /* Dark gray (existing) */
+  --color-light-buttons: #e8d9c5; /* Muted beige (existing) */
+  --color-text-light: #ffffff; /* White (existing) */
+  --color-text-dark: #1e1e1e; /* Near-black (existing) */
+  --color-border-light: #d9c9b3; /* Warm light border (subtle contrast) */
+  --color-border-dark: #1a1a1a; /* Deep dark border (rich contrast) */
+  --color-burgundy: #3a2e32;
+  --color-message-bg: #f5ede0;
+  --color-message-text: #5e2d38;
 }
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+html {
+  @apply scroll-smooth;
 }
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+::-webkit-scrollbar {
+  display: none;
 }
