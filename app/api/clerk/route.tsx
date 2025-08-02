@@ -24,12 +24,14 @@ export async function POST(req: NextRequest) {
   const headerPayload = await headers();
   const svixId = headerPayload.get("svix-id");
   const svixSignature = headerPayload.get("svix-signature");
+  const svixTimeStamp = headerPayload.get("svix-timestamp");
 
-  if (!svixId || !svixSignature) {
+  if (!svixId || !svixSignature || !svixTimeStamp) {
     return new NextResponse("Missing required headers", { status: 400 });
   }
   const svixHeaders = {
     "svix-id": svixId,
+    "svix-timestamp": svixTimeStamp,
     "svix-signature": svixSignature,
   };
 
