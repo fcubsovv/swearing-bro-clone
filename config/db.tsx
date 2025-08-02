@@ -1,8 +1,8 @@
 import mongoose, { Mongoose } from "mongoose";
 
 interface MongooseCache {
-  conn: Mongoose | null;
-  promise: Promise<Mongoose> | null;
+  conn: Mongoose;
+  promise: Promise<Mongoose>;
 }
 declare global {
   var mongoose: MongooseCache;

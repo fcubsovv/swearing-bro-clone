@@ -1,8 +1,8 @@
-import { Webhook } from "svix";
 import connectDB from "@/config/db";
 import User from "@/models/User";
 import { headers } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
+import { Webhook } from "svix";
 
 interface WebhookData {
   id: string;
@@ -14,20 +14,28 @@ interface WebhookData {
 
 export async function POST(req: NextRequest) {
   const signingSecret = process.env.SIGNING_SECRET;
+
   if (!signingSecret) {
     throw new Error("SIGNING_SECRET environment variable is not set");
   }
 
   const wh = new Webhook(signingSecret);
+
   const headerPayload = await headers();
+  const svixId = headerPayload.get("svix-id");
+  const svixSignature = headerPayload.get("svix-signature");
+
+  if (!svixId || !svixSignature) {
+    return new NextResponse("Missing required headers", { status: 400 });
+  }
   const svixHeaders = {
-    "svix-id": headerPayload.get("svix-id"),
-    "svix-timestamp": headerPayload.get("svix-timestamp"), //werent in tutorial
-    "svix-signature": headerPayload.get("svix-signature"),
+    "svix-id": svixId,
+    "svix-signature": svixSignature,
   };
 
   const payload = await req.json();
   const body = JSON.stringify(payload);
+
   const { data, type } = wh.verify(body, svixHeaders) as {
     data: WebhookData;
     type: string;

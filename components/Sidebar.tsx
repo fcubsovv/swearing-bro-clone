@@ -14,6 +14,10 @@ export default function Sidebar({ expand, setExpand }: SidebarProps) {
   const { openSignIn } = useClerk();
   const { user } = useAppContext();
   const [openMenu, setOpenMenu] = useState({ id: 0, open: false });
+  const handleProfileClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    if (!user) openSignIn();
+  };
   return (
     <div
       className={`flex flex-col justify-between bg-light-sidebar pt-7 transition-all z-50 max-md:absolute max-md:h-screen ${
@@ -32,7 +36,7 @@ export default function Sidebar({ expand, setExpand }: SidebarProps) {
             alt=""
           />
           <div
-            onClick={() => (expand ? setExpand(false) : setExpand(true))}
+            onClick={() => setExpand(!expand)}
             className="group relative flex items-center justify-center hover:bg-gray-500/20 transition-all duration-300 h-9 w-9 aspect-square rounded-lg cursor-pointer"
           >
             <Image src={assets.menu_icon} alt="" className="md:hidden" />
@@ -120,12 +124,12 @@ export default function Sidebar({ expand, setExpand }: SidebarProps) {
           )}
         </div>
         <div
-          onClick={user ? null : openSignIn}
+          onClick={handleProfileClick}
           className={`flex items-center ${
             expand
               ? "hover:bg-border-dark/10 rounded-lg"
               : "justify-center w-full"
-          } gap-3 text-text-dark/60 ext-sm p-2 mt-2 cursor-pointer`}
+          } gap-3 text-text-dark/60 text-sm p-2 mt-2 cursor-pointer`}
         >
           {user ? (
             <UserButton />
